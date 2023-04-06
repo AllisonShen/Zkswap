@@ -3,6 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/ISwap.sol";
 import "./sAsset.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract Swap is Ownable, ISwap {
 
@@ -58,6 +59,72 @@ contract Swap is Ownable, ISwap {
 
     /* TODO: implement your functions here */
 
+    function addLiquidity(uint token0Amount) external override {
+        // find token1Amount
+        uint token1Amount = (reserve1 * token0Amount) / reserve0;
+        // find current shares and add new shares
+        uint new_shares = (totalShares * token0Amount) / reserve0;
 
-    
+        // preform transfer
+        sAsset(token0).transferFrom(msg.sender, address(this), token0Amount);
+        sAsset(token1).transferFrom(msg.sender, address(this), token1Amount);
+
+        reserve0 += token0Amount;
+        reserve1 += token1Amount;
+        shares[msg.sender] += new_shares;
+        totalShares += new_shares;
+    }
+
+    function removeLiquidity(uint withdrawShares) external override {
+        require(withdrawShares <= shares[msg.sender], "Sender doesn't have enough shares.");
+        // uint total_shares = shares[msg.sender] / totalShares;
+        uint token0Amount = reserve0 * withdrawShares / totalShares;
+        uint token1Amount = reserve1 * withdrawShares / totalShares;
+
+        
+        // preform transfer
+        sAsset(token0).transfer(msg.sender, token0Amount);
+        sAsset(token1).transfer(msg.sender, token1Amount);
+
+        shares[msg.sender] -= withdrawShares;
+        reserve0 -= token0Amount;
+        reserve1 -= token1Amount;
+
+    }
+
+    function token0To1(uint token0Amount) external override {
+        // use buffer to avoid solidity cutting off decimals
+        uint buffer = 100;
+        uint token0_in = (token0Amount * 997) / 1000;
+        uint num = (reserve0 * reserve1 * buffer);
+        uint denom = (reserve0 + token0_in);
+        uint quotient = num / denom;    
+        uint token1_out = ((reserve1 * buffer) - quotient) / buffer;
+        
+        // perform transfer
+        sAsset(token0).transferFrom(msg.sender, address(this), token0Amount);
+        sAsset(token1).transfer(msg.sender, token1_out);
+
+        // update reserves
+        reserve0 += token0Amount;
+        reserve1 -= token1_out;
+    }
+
+    function token1To0(uint token1Amount) external override {
+        // use buffer to avoid solidity cutting off decimals
+        uint buffer = 100;
+        uint token1_in = (token1Amount * 997) / 1000;
+        uint num = (reserve0 * reserve1 * buffer);
+        uint denom = (reserve1 + token1_in);
+        uint quotient = num / denom;    
+        uint token0_out = ((reserve0 * buffer) - quotient) / buffer;
+        
+        // perform transfer
+        sAsset(token1).transferFrom(msg.sender, address(this), token1Amount);
+        sAsset(token0).transfer(msg.sender, token0_out);
+
+        // update reserves
+        reserve0 -= token0_out;
+        reserve1 += token1Amount;
+    }
 }
