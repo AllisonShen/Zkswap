@@ -60,14 +60,15 @@ contract Swap is Ownable, ISwap {
     /* TODO: implement your functions here */
 
     function addLiquidity(uint token0Amount) external override {
+        require(reserve0 != 0, "addLiquidity - reserve0 can not be 0.");
         // find token1Amount
         uint token1Amount = (reserve1 * token0Amount) / reserve0;
         // find current shares and add new shares
         uint new_shares = (totalShares * token0Amount) / reserve0;
 
-        // preform transfer
-        sAsset(token0).transferFrom(msg.sender, address(this), token0Amount);
-        sAsset(token1).transferFrom(msg.sender, address(this), token1Amount);
+        // perform transfer
+        require(sAsset(token0).transferFrom(msg.sender, address(this), token0Amount));
+        require(sAsset(token1).transferFrom(msg.sender, address(this), token1Amount));
 
         reserve0 += token0Amount;
         reserve1 += token1Amount;
@@ -77,19 +78,20 @@ contract Swap is Ownable, ISwap {
 
     function removeLiquidity(uint withdrawShares) external override {
         require(withdrawShares <= shares[msg.sender], "Sender doesn't have enough shares.");
+        require(totalShares > 0, "Insufficient totalShares amount.");
         // uint total_shares = shares[msg.sender] / totalShares;
         uint token0Amount = reserve0 * withdrawShares / totalShares;
         uint token1Amount = reserve1 * withdrawShares / totalShares;
 
         
-        // preform transfer
-        sAsset(token0).transfer(msg.sender, token0Amount);
-        sAsset(token1).transfer(msg.sender, token1Amount);
+        // perform transfer
+        require(sAsset(token0).transfer(msg.sender, token0Amount));
+        require(sAsset(token1).transfer(msg.sender, token1Amount));
 
         shares[msg.sender] -= withdrawShares;
         reserve0 -= token0Amount;
         reserve1 -= token1Amount;
-
+        totalShares -= withdrawShares;
     }
 
     function token0To1(uint token0Amount) external override {
@@ -102,8 +104,8 @@ contract Swap is Ownable, ISwap {
         uint token1_out = ((reserve1 * buffer) - quotient) / buffer;
         
         // perform transfer
-        sAsset(token0).transferFrom(msg.sender, address(this), token0Amount);
-        sAsset(token1).transfer(msg.sender, token1_out);
+        require(sAsset(token0).transferFrom(msg.sender, address(this), token0Amount));
+        require(sAsset(token1).transfer(msg.sender, token1_out));
 
         // update reserves
         reserve0 += token0Amount;
@@ -120,8 +122,8 @@ contract Swap is Ownable, ISwap {
         uint token0_out = ((reserve0 * buffer) - quotient) / buffer;
         
         // perform transfer
-        sAsset(token1).transferFrom(msg.sender, address(this), token1Amount);
-        sAsset(token0).transfer(msg.sender, token0_out);
+        require(sAsset(token1).transferFrom(msg.sender, address(this), token1Amount));
+        require(sAsset(token0).transfer(msg.sender, token0_out));
 
         // update reserves
         reserve0 -= token0_out;

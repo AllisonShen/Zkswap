@@ -1,0 +1,20 @@
+owner:
+  accounts: '0x4B97bE2A112Ff85fFDCa46791c37093710bB9907, 0xd183b8264a1DddcC291dEac09da3e826c376B5CA, 0x203945CDC696988Ff08e996d73B2dEea67B35c9e, 0x60a6c11aaD365A907D7d37Ccff5119b1bfC364C3'
+
+development:
+  rpc:
+  sBNB: 
+  sTSLA:
+  Swap:
+  
+zkevm_testnet:
+  rpc:  https://rpc.public.zkevm-test.net
+  sBNB: '0x6d1d267fb66c82a904a6b31bc82f39f08f0fb175'
+  sTSLA: '0x44ebc699f42a2d53fe68d20d00130cf1ec0fad24'
+  Swap: '0xCe3fCBAfeaFEB895AA6a6e4cA67A8a7D7957E42E'
+
+goerli:
+  rpc:  https://goerli.infura.io/v3/
+  sBNB: '0xA25Ce7101271651a0333788a294D825B8E09e275'
+  sTSLA: '0x51A6115f779A88a4fFF8766039d99Af8d95E07D3'
+  Swap: '0x1d0a5BDb90b9d4f1BB5B17516A07f031Cc903099'  
