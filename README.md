@@ -7,9 +7,7 @@ liquidity tool and enable exchanges between reserves of two synthetic tokens on 
 to achieve fast, low-gas, zero-knowledge proof transactions
 
 ## Swap interface
-Basic functions of DEXs in `contracts/Swap.sol` to manage a liquidity pool made up of reserves of two sAsset tokens and enable exchanges between them. Please follow the below specifications and the interfaces defined in `contracts/interfaces/ISwap.sol`. 
-
-The protocol in this part is derived from [Uniswap v2](https://docs.uniswap.org/protocol/V2/introduction), where we use [constant product formula x * y = k](https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works) to determine exchange prices. A formal specification of the constant product market maker model can be found [here](https://github.com/runtimeverification/verified-smart-contracts/blob/uniswap/uniswap/x-y-k.pdf).
+Basic functions of DEXs in `contracts/Swap.sol` to manage a liquidity pool made up of reserves of two sAsset tokens and enable exchanges between them. Please follow the below specifications and the interfaces defined in `contracts/interfaces/ISwap.sol`. The protocol in this swap is derived from [Uniswap v2](https://docs.uniswap.org/protocol/V2/introduction).
 
 ### State variables
 
