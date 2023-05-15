@@ -1,9 +1,15 @@
 # COS473 Final Project: Zk-Swap: Implementing Uniswap on zkEVM Polygon to Harness Speed, Lower Transaction Fees, and Utilize Less Gas
 
-The protocol in this part is derived from [Uniswap v2](https://docs.uniswap.org/protocol/V2/introduction), where we use [constant product formula x * y = k](https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works) to determine exchange prices. A formal specification of the constant product market maker model can be found [here](https://github.com/runtimeverification/verified-smart-contracts/blob/uniswap/uniswap/x-y-k.pdf).
+###Authors: Ava, Nick, Xiaxin and Willow
+
+The main objective of this project is to implementing basic functions of DEX to manage a
+liquidity tool and enable exchanges between reserves of two synthetic tokens on zkEVM polygon
+to achieve fast, low-gas, zero-knowledge proof transactions
 
 ## Swap interface
 Basic functions of DEXs in `contracts/Swap.sol` to manage a liquidity pool made up of reserves of two sAsset tokens and enable exchanges between them. Please follow the below specifications and the interfaces defined in `contracts/interfaces/ISwap.sol`. 
+
+The protocol in this part is derived from [Uniswap v2](https://docs.uniswap.org/protocol/V2/introduction), where we use [constant product formula x * y = k](https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works) to determine exchange prices. A formal specification of the constant product market maker model can be found [here](https://github.com/runtimeverification/verified-smart-contracts/blob/uniswap/uniswap/x-y-k.pdf).
 
 ### State variables
 
