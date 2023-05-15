@@ -1,6 +1,6 @@
 # COS473 Final Project: Zk-Swap: Implementing Uniswap on zkEVM Polygon to Harness Speed, Lower Transaction Fees, and Utilize Less Gas
 
-###Authors: Ava, Nick, Xiaxin and Willow
+Authors: Ava, Nick, Xiaxin and Willow
 
 The main objective of this project is to implementing basic functions of DEX to manage a
 liquidity tool and enable exchanges between reserves of two synthetic tokens on zkEVM polygon
