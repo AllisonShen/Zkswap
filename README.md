@@ -2,9 +2,9 @@
 
 Authors: Ava, Nick, Xiaxin and Willow
 
-The main objective of this project is to implementing basic functions of DEX to manage a
-liquidity tool and enable exchanges between reserves of two synthetic tokens on zkEVM polygon
-to achieve fast, low-gas, zero-knowledge proof transactions
+The main objective of this project is to implement basic functions of a DEX to manage a
+liquidity tool and enable exchanges between reserves of two synthetic tokens on Polygon zkEVM
+to achieve fast, low-gas, zero-knowledge proof transactions.
 
 ## Swap interface
 Basic functions of DEXs in `contracts/Swap.sol` to manage a liquidity pool made up of reserves of two sAsset tokens and enable exchanges between them. Please follow the below specifications and the interfaces defined in `contracts/interfaces/ISwap.sol`. The protocol in this swap is derived from [Uniswap v2](https://docs.uniswap.org/protocol/V2/introduction).
