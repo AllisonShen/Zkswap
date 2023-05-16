@@ -227,11 +227,11 @@ def get_tx_data(network_name, api_key, tx_hash):
     else:
         url = ZKEVM_TESTNET_API_URL
     get_transaction_url = f'{url}/api?module=proxy&action={GET_TRANSACTION_BY_HASH_ACTION}&txhash={tx_hash}&apikey={api_key}'
+    get_transaction_receipt_url = f'{url}/api?module=proxy&action={GET_TRANSACTION_RECEIPT_ACTION}&txhash={tx_hash}&apikey={api_key}'
+    get_transaction_response = requests.get(get_transaction_url)
     # maximum rate limit of up to 5 calls per sec/IP
     time.sleep(1.0 / 5.0)
-    get_transaction_receipt_url = f'{url}/api?module=proxy&action={GET_TRANSACTION_RECEIPT_ACTION}&txhash={tx_hash}&apikey={api_key}'
-    get_transaction_response = requests.get(get_transaction_url + tx_hash)
-    get_transaction_receipt_response = requests.get(get_transaction_receipt_url + tx_hash)
+    get_transaction_receipt_response = requests.get(get_transaction_receipt_url)
     return Transaction(get_transaction_response.content, get_transaction_receipt_response.content)
 
 
